@@ -1,7 +1,7 @@
 services:
     database:
         image: mysql:8
-        container_name:adj-database
+        container_name:adj-database:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: adj-demo
@@ -33,16 +33,29 @@ services:
         build:
             context: ./server
         environment:
-            SERVER_PORT: 8081
+            SERVER_PORT: 8080
             DB_HOST: localhost
             DB_PORT: 3306
             DB_NAME: adj_demo
             DB_USER: root
             DB_PASSWORD: root
-        container_name: adj-client
+        container_name: adj-server
         ports:
-            - "3000:80"
+            - "8081:8080"
         networks:
             - adj-net
         depends_on:
-        - database
+        - frontend
+
+# 1. docker volume create adj-volume
+volumes:
+    adj-volume:
+        external: true
+
+# 2. docker network create --driver bridge adj-net
+# docker network ls
+networks:
+    adj-net:
+        external: true
+
+# 3. docker compose build --no-cache
