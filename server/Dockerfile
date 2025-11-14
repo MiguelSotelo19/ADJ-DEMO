@@ -1,19 +1,19 @@
-#Servir imagen de backend con maven
+# Servir imagen de backend con maven
 FROM maven:3.9.9-eclipse-temurin-21
 
-#Establecer directorio trabajo
+# Establecer directorio trabajo
 WORKDIR /app
 
-#Copia todos los archivos del proyecto en el directorio de trabajo
+# Copia todos los archivos del proyecto en el directorio de trabajo
 COPY . . 
 
-#Ejecutar
+# Ejecutar
 #   1.- Limpiar y compilar el JAR del backend
-#   2.- Copiar el resultane al directorio de trabajo
-#       Dskiptest es para que no trate de ejecutar las clases
-RUN mvn clean package -DskipTests && cp target/*.jar app-jar
+#   2.- Copiar el resultante al directorio de trabajo
+#       DskipTests es para que no trate de ejecutar las clases
+RUN mvn clean package -DskipTests && cp target/*.jar app.jar
 
-EXPOSE 8081
+EXPOSE 8080
 
-#Servir el JAR
-ENTRYPOINT ["java","-jar","app.jar"]
+# Servir el JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
